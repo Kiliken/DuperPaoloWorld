@@ -28,7 +28,7 @@ echo Settingup heavy stuffs...
 if %false% robocopy "%ueTempPath%\..\Samples\StarterContent\Content" "%~dp0..\Content" /E /NFL /NDL /NJH /NJS /NC /NS
 
 :: Characters
-if %false% robocopy "%ueTempPath%\TemplateResources\High\Characters\Content" "%~dp0..\Content\Characters" /E /NFL /NDL /NJH /NJS /NC /NS
+if %true% robocopy "%ueTempPath%\TemplateResources\High\Characters\Content" "%~dp0..\Content\Characters" /E /NFL /NDL /NJH /NJS /NC /NS
 
 :: LevelPrototyping
 if %false% robocopy "%ueTempPath%\TemplateResources\High\LevelPrototyping\Content" "%~dp0..\Content\LevelPrototyping" /E /NFL /NDL /NJH /NJS /NC /NS
