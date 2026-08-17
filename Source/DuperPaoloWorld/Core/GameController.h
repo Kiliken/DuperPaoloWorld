@@ -4,17 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "imgui.h"
-#include "TitleController.generated.h"
+#include "GameController.generated.h"
+
+class ADuperPaoloWorldCharacter;
 
 UCLASS()
-class ATitleController : public AActor
+class AGameController : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ATitleController();
+	AGameController();
 
 protected:
 	// Called when the game starts or when spawned
@@ -24,16 +25,14 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	int score = 0;
+	float playerHp = 50.f;
+	float playerSt = 100.f;
+
 private:
 	APlayerController* PC;
+	ADuperPaoloWorldCharacter* charController;
 
-	ImFont* CustomFont;
-
-	bool stageSelect = false;
-
-	int stageProgress = 1;
-
-	void ShowTitleMenu();
-	void ShowStageSelectMenu();
-
+	void ShowScoreUI();
+	void ShowStatBarUI();
 };

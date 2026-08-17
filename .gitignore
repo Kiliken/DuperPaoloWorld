@@ -80,11 +80,11 @@ DerivedDataCache/*
 !.vscode/tasks.json
 *.ignore
 *.zip
+*.7z
+*.tar.gz
 /Plugins/
 /GameBuild/
 codeDL.ps1
 
 # Clean Contents
-/Content/StarterContent/
-/Content/Characters/
-/Content/LevelPrototyping/
+/[Cc]ontent/

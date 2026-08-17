@@ -4,7 +4,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "string"
 #include "ImGuiModule.h"
-//#include "../Fonts/FONT_Tron.h"
+// #include "../Fonts/FONT_Tron.h"
 
 // Sets default values
 ATitleController::ATitleController()
@@ -21,7 +21,7 @@ void ATitleController::BeginPlay()
 	PC = GetWorld()->GetFirstPlayerController();
 	ImGuiIO &io = ImGui::GetIO();
 
-	if(false)  //(io.Fonts->Fonts.Size == 1)
+	if (false) //(io.Fonts->Fonts.Size == 1)
 	{
 		if (TSharedPtr<ImFontConfig> FAFontConfig = MakeShareable(new ImFontConfig()))
 		{
@@ -52,7 +52,10 @@ void ATitleController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	ShowTitleMenu();
+	if (stageSelect)
+		ShowStageSelectMenu();
+	else
+		ShowTitleMenu();
 }
 
 void ATitleController::ShowTitleMenu()
@@ -109,10 +112,9 @@ void ATitleController::ShowTitleMenu()
 
 	// --- START BUTTON ---
 	ImGui::SetCursorPosX((windowWidth - buttonWidth) * 0.5f);
-	if (ImGui::Button("START GAME", ImVec2(buttonWidth, buttonHeight)))
+	if (ImGui::Button("STAGE SELECT", ImVec2(buttonWidth, buttonHeight)))
 	{
-		FImGuiModule::Get().SetInputMode(false);
-		UGameplayStatics::OpenLevel(GetWorld(), "FirstLevel");
+		stageSelect = true;
 	}
 
 	// --- CREDITS BUTTON ---
@@ -128,6 +130,78 @@ void ATitleController::ShowTitleMenu()
 	{
 		if (PC)
 			PC->ConsoleCommand("quit");
+	}
+
+	ImGui::End();
+
+	// Clean up styles
+	ImGui::PopFont();
+	ImGui::PopStyleVar(2);
+	ImGui::PopStyleColor(4);
+}
+
+void ATitleController::ShowStageSelectMenu()
+{
+	ImGuiIO &io = ImGui::GetIO();
+	// Calculate center of the screen
+	ImVec2 center = ImVec2(io.DisplaySize.x * 0.5f, io.DisplaySize.y * 0.5f);
+
+	// Make the window large enough to hold a big title and spacious buttons
+	ImVec2 menuSize = ImVec2(500.0f, 350.0f);
+	ImGui::SetNextWindowPos(center, ImGuiCond_Always, ImVec2(0.5f, 0.5f));
+	ImGui::SetNextWindowSize(menuSize, ImGuiCond_Always);
+
+	// Added NoTitleBar and NoBackground to make it a clean, floating overlay
+	ImGuiWindowFlags flags =
+		ImGuiWindowFlags_NoResize |
+		ImGuiWindowFlags_NoMove |
+		ImGuiWindowFlags_NoCollapse |
+		ImGuiWindowFlags_NoSavedSettings |
+		ImGuiWindowFlags_NoTitleBar |
+		ImGuiWindowFlags_NoBackground;
+
+	// --- STYLING: The "Mystery Box" Palette ---
+	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.95f, 0.95f, 0.95f, 1.0f));
+	ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.05f, 0.15f, 0.35f, 0.8f));
+	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.15f, 0.35f, 0.65f, 1.0f));
+	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.02f, 0.08f, 0.20f, 1.0f));
+
+	ImGui::PushFont(CustomFont);
+
+	// Padding and rounding to make buttons look modern and sleek
+	ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 6.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0.0f, 15.0f)); // Elegant spacing between elements
+
+	ImGui::Begin("MysteryBoxMainMenu", nullptr, flags);
+
+	float windowWidth = ImGui::GetWindowSize().x;
+	float buttonWidth = 250.0f;
+	float buttonHeight = 45.0f; // Taller buttons look way more professional
+
+	for (int i = 0; i < 4; i++)
+	{
+		char stageName[8];
+		snprintf(stageName, sizeof(stageName), "STAGE %d", i + 1);
+		char levelName[8];
+		snprintf(levelName, sizeof(levelName), "StageLevel_%d", i + 1);
+
+		if (i == stageProgress)
+		{
+			ImGui::PopStyleColor(4);
+			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.310f, 0.310f, 0.310f, 1.0f));
+			ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.01f, 0.05f, 0.15f, 0.8f));
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.01f, 0.05f, 0.15f, 0.8f));
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.01f, 0.05f, 0.15f, 0.8f));
+		}
+
+		ImGui::SetCursorPosX((windowWidth - buttonWidth) * 0.5f);
+		if (ImGui::Button(stageName, ImVec2(buttonWidth, buttonHeight)))
+		{
+			if(i < stageProgress){
+				FImGuiModule::Get().SetInputMode(false);
+				UGameplayStatics::OpenLevel(GetWorld(), levelName);
+			}
+		}
 	}
 
 	ImGui::End();

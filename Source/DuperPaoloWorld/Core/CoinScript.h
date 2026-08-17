@@ -4,17 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "imgui.h"
-#include "TitleController.generated.h"
+
+#include "GameController.h"
+
+#include "CoinScript.generated.h"
 
 UCLASS()
-class ATitleController : public AActor
+class ACoinScript : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ATitleController();
+	ACoinScript();
 
 protected:
 	// Called when the game starts or when spawned
@@ -25,15 +27,12 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
-	APlayerController* PC;
+	UStaticMeshComponent* thisComponent;
+	AGameController* gameController;
 
-	ImFont* CustomFont;
-
-	bool stageSelect = false;
-
-	int stageProgress = 1;
-
-	void ShowTitleMenu();
-	void ShowStageSelectMenu();
+	UFUNCTION()
+	void OnCoinOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
+                       UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, 
+                       bool bFromSweep, const FHitResult& SweepResult);
 
 };

@@ -20,18 +20,12 @@ exit
 
 :main
 
-set true=1 EQU 1
-set false=0 EQU 1
 echo Settingup heavy stuffs...
 
-:: Starting Contents
-if %false% robocopy "%ueTempPath%\..\Samples\StarterContent\Content" "%~dp0..\Content" /E /NFL /NDL /NJH /NJS /NC /NS
+if not exist %~dp0..\Content md %~dp0..\Content
 
-:: Characters
-if %true% robocopy "%ueTempPath%\TemplateResources\High\Characters\Content" "%~dp0..\Content\Characters" /E /NFL /NDL /NJH /NJS /NC /NS
+if exist %~dp0DuperPaoloWolrdContents.tar.gz tar -xzf %~dp0DuperPaoloWolrdContents.tar.gz -C %~dp0..\Content
 
-:: LevelPrototyping
-if %false% robocopy "%ueTempPath%\TemplateResources\High\LevelPrototyping\Content" "%~dp0..\Content\LevelPrototyping" /E /NFL /NDL /NJH /NJS /NC /NS
 
 :: Plugins
 if not exist "%~dp0..\Plugins" powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0PluginsSetup.ps1"

@@ -19,7 +19,7 @@ public class DuperPaoloWorld : ModuleRules
 			"GameplayStateTreeModule",
 			"UMG",
 			"Slate",
-			"ImGUI"
+			"ImGui"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });
