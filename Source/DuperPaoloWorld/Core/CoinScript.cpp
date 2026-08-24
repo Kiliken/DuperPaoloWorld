@@ -66,7 +66,7 @@ void ACoinScript::OnCoinOverlap(UPrimitiveComponent* OverlappedComponent, AActor
         {
             if (gameController)
             {
-                gameController->playerHp = FMath::Min(gameController->playerHp + 10, 100);
+                gameController->score += 1;
                 
                 UE_LOG(LogTemp, Log, TEXT("HP Collected! New HP: %f"), gameController->playerHp);
                 Destroy();

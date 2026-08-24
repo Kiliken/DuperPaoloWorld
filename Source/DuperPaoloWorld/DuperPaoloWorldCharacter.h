@@ -52,7 +52,10 @@ protected:
 public:
 
 	/** Constructor */
-	ADuperPaoloWorldCharacter();	
+	ADuperPaoloWorldCharacter();
+
+private:
+	bool isRunning = false;
 
 protected:
 
@@ -92,5 +95,7 @@ public:
 
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+	void SetRunningState(bool state);
 };
 

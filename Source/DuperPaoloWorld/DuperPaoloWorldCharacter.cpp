@@ -30,7 +30,7 @@ ADuperPaoloWorldCharacter::ADuperPaoloWorldCharacter()
 	// instead of recompiling to adjust them
 	GetCharacterMovement()->JumpZVelocity = 500.f;
 	GetCharacterMovement()->AirControl = 0.35f;
-	GetCharacterMovement()->MaxWalkSpeed = 500.f;
+	GetCharacterMovement()->MaxWalkSpeed = 250.f;
 	GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
@@ -132,4 +132,15 @@ void ADuperPaoloWorldCharacter::DoJumpEnd()
 {
 	// signal the character to stop jumping
 	StopJumping();
+}
+
+void ADuperPaoloWorldCharacter::SetRunningState(bool state)
+{
+	if (state == isRunning) 
+		return;
+	
+    isRunning = state;
+
+    // Apply the speed adjustment exactly once
+    GetCharacterMovement()->MaxWalkSpeed = isRunning ? 500.f : 250.f;
 }

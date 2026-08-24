@@ -37,11 +37,11 @@ void AGameController::Tick(float DeltaTime)
 
     if (PC->IsInputKeyDown(EKeys::LeftShift) && playerSt > 1.f)
     {
-        //charController->SetRunningState(true);
+        charController->SetRunningState(true);
         playerSt -= 10.f * DeltaTime;
     }
     else if(playerSt < 100.f){
-        //charController->SetRunningState(false);
+        charController->SetRunningState(false);
         playerSt += 10.f * DeltaTime;
     }
 
@@ -56,7 +56,7 @@ void AGameController::ShowScoreUI()
 
     ImGuiIO &io = ImGui::GetIO();
     // Calculate center of the screen
-    ImVec2 center = ImVec2(io.DisplaySize.x * 0.05f, io.DisplaySize.y * 0.05f);
+    ImVec2 center = ImVec2(io.DisplaySize.x * 0.95f, io.DisplaySize.y * 0.05f);
 
     // Set next window position to center, with pivot at the center
     ImGui::SetNextWindowPos(center, ImGuiCond_Always, ImVec2(0.5f, 0.5f));
