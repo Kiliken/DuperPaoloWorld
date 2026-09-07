@@ -180,9 +180,10 @@ void ATitleController::ShowStageSelectMenu()
 
 	for (int i = 0; i < 4; i++)
 	{
-		char stageName[8];
+		char stageName[16];
 		snprintf(stageName, sizeof(stageName), "STAGE %d", i + 1);
-		char levelName[8];
+
+		char levelName[32];
 		snprintf(levelName, sizeof(levelName), "StageLevel_%d", i + 1);
 
 		if (i == stageProgress)
@@ -197,9 +198,10 @@ void ATitleController::ShowStageSelectMenu()
 		ImGui::SetCursorPosX((windowWidth - buttonWidth) * 0.5f);
 		if (ImGui::Button(stageName, ImVec2(buttonWidth, buttonHeight)))
 		{
-			if(i < stageProgress){
+			if (i <= stageProgress)
+			{
 				FImGuiModule::Get().SetInputMode(false);
-				UGameplayStatics::OpenLevel(GetWorld(), levelName);
+				UGameplayStatics::OpenLevel(GetWorld(), FName(levelName));
 			}
 		}
 	}

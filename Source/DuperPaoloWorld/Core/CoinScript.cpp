@@ -14,9 +14,9 @@ ACoinScript::ACoinScript()
 	thisComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
 	RootComponent = thisComponent;
 	
-	UStaticMesh* Mesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Engine/BasicShapes/Cube"));
+	UStaticMesh* Mesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Game/Materials/coin"));
 	thisComponent->SetStaticMesh(Mesh);
-	UMaterial* Material = LoadObject<UMaterial>(nullptr, TEXT("/Engine/BasicShapes/BasicShapeMaterial"));
+	UMaterial* Material = LoadObject<UMaterial>(nullptr, TEXT("/Game/Materials/Gold"));
 	thisComponent->SetMaterial(0, Material);
 
 	thisComponent->SetCollisionProfileName(TEXT("Trigger"));
@@ -47,7 +47,7 @@ void ACoinScript::Tick(float DeltaTime)
 	FRotator rot = this->GetActorRotation();
 
 	if (rot.Yaw < 360.f) {
-		this->SetActorRotation(rot + FRotator(0, 15, 0) * DeltaTime);
+		this->SetActorRotation(rot + FRotator(0, 45, 0) * DeltaTime);
 	}
 	else this->SetActorRotation(FRotator(0));
 

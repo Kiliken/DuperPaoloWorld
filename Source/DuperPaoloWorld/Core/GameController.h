@@ -32,7 +32,7 @@ public:
 private:
 	APlayerController* PC;
 	ADuperPaoloWorldCharacter* charController;
-
-	void ShowScoreUI();
+	APawn* playerPawn;
+	
 	void ShowStatBarUI();
 };
